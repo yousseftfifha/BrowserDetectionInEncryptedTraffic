@@ -1,0 +1,21 @@
+;cv_score;best_model;best_params;val_score
+0;0.8973533083645442;DecisionTreeClassifier(criterion='entropy', max_depth=18, min_samples_leaf=29);OrderedDict([('criterion', 'entropy'), ('max_depth', 18), ('min_samples_leaf', 29)]);0.9196428571428571
+1;0.9106866416978777;"RandomForestClassifier(max_depth=10, max_samples=0.5221105086661675,
+                       min_samples_split=20, n_estimators=170)";OrderedDict([('criterion', 'gini'), ('max_depth', 10), ('max_samples', 0.5221105086661675), ('min_samples_split', 20), ('n_estimators', 170)]);0.875
+2;0.9017977528089887;"LGBMClassifier(learning_rate=0.02803511071356339, max_depth=15,
+               min_child_samples=11, n_estimators=207,
+               reg_alpha=0.07964402279755826, reg_lambda=0.43655855533859994,
+               subsample=0.5678064186982473)";OrderedDict([('learning_rate', 0.02803511071356339), ('max_depth', 15), ('min_child_samples', 11), ('n_estimators', 207), ('reg_alpha', 0.07964402279755826), ('reg_lambda', 0.43655855533859994), ('subsample', 0.5678064186982473)]);0.9375
+3;0.9107116104868913;ExtraTreesClassifier(max_depth=25, min_samples_split=13, n_estimators=215);OrderedDict([('max_depth', 25), ('min_samples_split', 13), ('n_estimators', 215)]);0.8928571428571429
+4;0.9017727840199751;"XGBClassifier(base_score=0.5, booster='gbtree', callbacks=None,
+              colsample_bylevel=1, colsample_bynode=1, colsample_bytree=1,
+              early_stopping_rounds=None, enable_categorical=False,
+              eval_metric='mlogloss', gamma=0, gpu_id=-1,
+              grow_policy='depthwise', importance_type=None,
+              interaction_constraints='', learning_rate=0.0060423288685348,
+              max_bin=256, max_cat_to_onehot=4, max_delta_step=0, max_depth=19,
+              max_leaves=0, min_child_weight=1, missing=nan,
+              monotone_constraints='()', n_estimators=150, n_jobs=0,
+              num_parallel_tree=1, objective='multi:softprob', predictor='auto',
+              random_state=0, reg_alpha=0.10131282720301876, ...)";OrderedDict([('eval_metric', 'mlogloss'), ('gamma', 0), ('learning_rate', 0.0060423288685348), ('max_depth', 19), ('n_estimators', 150), ('reg_alpha', 0.10131282720301876), ('reg_lambda', 0.29092323113779645), ('subsample', 0.5090145227021)]);0.9017857142857143
+5;0.854956304619226;MLPClassifier(alpha=0.09055697866649717, hidden_layer_sizes=39, max_iter=300);OrderedDict([('activation', 'relu'), ('alpha', 0.09055697866649717), ('hidden_layer_sizes', 39), ('max_iter', 300), ('solver', 'adam')]);0.8571428571428571

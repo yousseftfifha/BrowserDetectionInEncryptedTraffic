@@ -1,0 +1,8 @@
+# Ignore ipynb_checkpoints folders
+**/ipynb_checkpoints/
+
+# Ignore .idea folders
+**/.idea/
+
+# Ignore __pycache__ folders
+**/__pycache__/

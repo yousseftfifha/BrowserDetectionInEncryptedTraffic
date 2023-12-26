@@ -1,0 +1,147 @@
+tls_scrapping:
+  extension_types:
+    url: 'https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml'
+    id: 'table-tls-extensiontype-values-1'
+  handshake_types:
+    url: 'https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml'
+    id: 'table-tls-parameters-7'
+
+list_of_features: ['packet_directions', 'ip.len', 'ip.ttl','tcp.offset','tcp.window_size_value', 'frame.time_epoch', 'tcp.flags', 'tls.cipher',
+                   'tls.handshake.ciphersuite.ch','tls.handshake.extension.len', 'tls.handshake.extension.type',
+                    'tls.handshake.extensions.supported_version.ch', 'tls.handshake.extensions_alpn_str.ch',
+                    'tls.handshake.extensions_length', 'tls.handshake.extensions_supported_group.ch',
+                    'tls.handshake.sig_hash_alg.ch', 'tls.handshake.type', 'tls.handshake.version.ch',
+                    'tls.handshake.version.sh', 'uan']
+
+nb_max_packets: 20
+start_from_tcp_syn: False
+
+tcpip_operations:
+  new_frame.time_epochsub_20_False:
+    I: ['total_time', 'cv', 'id', 'bp', 'total_burst', 'idle_time', 'bursty_sessions', 'stationarity', 'trend', 'periodicity', 'seasonal']
+    O: ['total_time', 'cv', 'id', 'bp', 'total_burst', 'idle_time', 'bursty_sessions', 'stationarity', 'trend', 'periodicity', 'seasonal']
+  new_ip.len_20_False:
+    I: ['total', 'rate_total' ]
+    O: ['total', 'rate_total' ]
+  new_tcp.window_size_value_20_False:
+    I: ['rate_max']
+    O: ['rate_max']
+  new_tcp.offset_20_False:
+    I: []
+    O: []
+  new_ip.ttl_20_False:
+    I: []
+    O: []
+
+cipher_api_url: 'https://ciphersuite.info/api/cs/'
+
+cipher_not_found :
+    'tls.cipher_hex_byte': 'UNDEFINED'
+    'tls.cipher_kex_algorithm': 'UNDEFINED'
+    'tls.cipher_auth_algorithm': 'UNDEFINED'
+    'tls.cipher_enc_algorithm': 'UNDEFINED'
+    'tls.cipher_hash_algorithm': 'UNDEFINED'
+    'tls.cipher_security': 'UNDEFINED'
+
+undesirable: [ 'frame.time_epoch','ip.len', 'ip.ttl','tcp.offset', 'new_frame.time_epoch_20_False','new_frame.time_epoch_20_False_I',
+  'new_frame.time_epoch_20_False_O','new_frame.time_epoch_HC','new_ip.len_20_False','new_ip.len_20_False_I',
+  'new_ip.len_20_False_O','new_packet_directions_20_False','new_tcp.flags_20_False','new_tcp.flags_20_False_I',
+  'new_tcp.flags_20_False_O','new_tcp.window_size_value_20_False','new_tcp.window_size_value_20_False_I',
+  'new_tcp.window_size_value_20_False_O','new_tls.handshake.extensions_supported_group.ch','new_tls.handshake.type',
+  'new_tls.handshake.type_pos1','new_tls.handshake.type_pos2','packet_directions','tcp.flags','tcp.window_size_value',
+  'tls.handshake.ciphersuite.ch','tls.handshake.extension.len','tls.handshake.extension.type',
+  'tls.handshake.extensions.supported_version.ch','new_tls.handshake.extensions.supported_version.ch',
+  'tls.handshake.sig_hash_alg.ch','tls.handshake.extensions_length','new_tls.handshake_type_client',
+  'new_tls.handshake_type_server','new_tcp.flags_HC','tls.handshake.extensions_alpn_str.ch',
+  'tls.handshake.extensions_supported_group.ch','tls.handshake.type','tls.version','temp',
+  'new_tls.handshake.extensions_alpn_str.ch_index','new_tls.handshake.sig_hash_alg.ch_index','new_tcp.offset_20_False',
+  'new_tls.handshake.ciphersuite.ch','new_tls.handshake.sig_hash_alg.ch',
+  'new_tls.handshake.ciphersuite.ch_index','new_frame.time_epochsub_20_False_I','new_frame.time_epochsub_20_False_O',
+  'new_ip.ttl_20_False_I','new_ip.ttl_20_False_O','new_tcp.offset_20_False_O','new_tcp.offset_20_False_I',
+  'new_ip.ttl_20_False']
+
+grease_dict: ['0x0a0a','0x1a1a', '0x2a2a','0x3a3a','0x4a4a','0x5a5a','0x6a6a','0x7a7a', '0x8a8a','0x9a9a',
+                      '0xaaaa','0xbaba','0xcaca','0xdada','0xfafa']
+
+
+
+path_train_data :  "cleaned_train_set.csv"
+path_validation_data : "cleaned_validation_set.csv"
+path_test_data :  "cleaned_test_set.csv"
+
+feature_selection :
+    models:
+      RandomForestClassifier:
+        n_estimators: 250
+        max_depth: 20
+        criterion: 'entropy'
+        min_samples_split: 10
+        max_samples: 0.8
+        n_jobs: -1
+      LGBMClassifier:
+        n_estimators: 250
+        min_child_samples: 18
+        learning_rate: 0.1
+        subsample: 0.5
+        max_depth: 11
+        n_jobs: -1
+      XGBClassifier:
+        n_estimators: 250
+        tree_method: 'hist'
+        eval_metric: 'mlogloss'
+        max_depth: 16
+        learning_rate: 0.1
+        enable_categorical: True
+        subsample: 0.8
+        reg_lambda: 0.001
+        reg_alpha: 0.5
+        n_jobs: -1
+      ExtraTreesClassifier:
+        n_estimators: 100
+        n_jobs: -1
+      CatBoostClassifier:
+          iterations: 200
+          verbose: False
+
+model_selection :
+    hyperparam_configs:
+        DecisionTreeClassifier:
+          criterion: [ "gini", "entropy" ]
+          max_depth: [ 3,5, 7, 10,20 ]
+          min_samples_leaf: [ 5, 10,20,30, 40 ]
+        RandomForestClassifier:
+          n_estimators: [ 150, 200, 250]
+          min_samples_split: [ 10,15,20 ]
+          criterion: [ 'gini','entropy' ]
+          max_depth: [ 8,12,16,20 ]
+          max_samples: [ 0.5, 0.6, 0.7 ]
+        LGBMClassifier:
+          n_estimators: [ 150, 200, 250 ]
+          learning_rate: [ 0.001, 0.01,0.1 ]
+          max_depth: [ 8,12,16,20 ]
+          min_child_samples: [ 10,15,20 ]
+          subsample: [ 0.5, 0.6, 0.7]
+          reg_alpha: [0.001, 0.01, 0.1, 0.5 ]
+          reg_lambda: [ 0.001, 0.01, 0.1, 0.5 ]
+        ExtraTreesClassifier:
+          n_estimators: [ 150, 200, 250 ]
+          max_depth: [5, 10, 15,20,30]
+          min_samples_split: [ 10,15,20 ]
+        XGBClassifier:
+          n_estimators: [ 150, 200, 250, ]
+          learning_rate: [0.001, 0.01,0.1 ]
+          max_depth: [ 8,12,16,20 ]
+          eval_metric: [ "mlogloss" ]
+          gamma: [0, 0.1, 0.5,1]
+          subsample: [0.5, 0.6, 0.7]
+          reg_alpha: [0.001, 0.01, 0.1, 0.5 ]
+          reg_lambda: [ 0.001, 0.01, 0.1, 0.5 ]
+        MLPClassifier:
+          hidden_layer_sizes: [ 20, 30, 40 ]
+          activation: [ 'relu' ]
+          solver: [ 'adam' ]
+          alpha: [ 0.001, 0.01, 0.1 ]
+          max_iter: [ 100, 200, 300 ]
+
+    rgs_nb_iterations: 1500
+    Kfold: 5
