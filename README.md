@@ -16,7 +16,7 @@ generic packet properties. Following that, we used feature selection to determin
 relevant features, resulting in a balance between accuracy and training as well as testing time.
 Then the model selection stage is carried out to identify the best model. The performance of
 the classifier is assessed using various test sets containing traffic with known browser labels.
-With an accuracy of 0.91%, our results show that the machine learning approach is effective
+With an accuracy of 0.91, our results show that the machine learning approach is effective
 at passively detecting the browser in encrypted TLS traffic. This method has the potential
 to increase network security and forensics efficacy by providing insight into the devices and
 systems present on a network when communication is encrypted.
